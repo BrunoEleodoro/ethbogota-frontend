@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { useContractFunction, useEthers } from '@usedapp/core';
+import {
+  ERC20Interface,
+  useCall,
+  useContractFunction,
+  useEthers,
+  useTokenBalance,
+} from '@usedapp/core';
 import {
   createStyles,
   Navbar,
@@ -23,10 +29,15 @@ import {
 } from '@tabler/icons';
 import NavbarComponent from './Navbar';
 import { create } from 'domain';
-import { MockProfileCreationProxyContract } from '../../utiils/contracts';
+import {
+  LensHubProxyContract,
+  MockProfileCreationProxyContract,
+} from '../../utiils/contracts';
 import { Contract, utils } from 'ethers';
+import LensHubProxy from '../../assets/abis/LensHubProxy.json';
 import MockProfileCreationProxy from '../../assets/abis/MockProfileCreationProxy.json';
 import { MockProfileCreationProxyAddress } from '../../utiils/constants';
+import { Interface } from 'ethers/lib/utils';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
@@ -200,6 +211,7 @@ const collections = [
 export default function HomePage() {
   const { classes } = useStyles();
   const { account } = useEthers();
+  const [balance, setBalance] = React.useState(0);
 
   const mainLinks = links.map((link) => (
     <UnstyledButton key={link.label} className={classes.mainLink}>
@@ -237,10 +249,20 @@ export default function HomePage() {
     transactionName: 'proxyCreateProfile',
   });
 
+  // const value = useCall({
+  //   contract: new Contract(
+  //     '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82',
+  //     new Interface(LensHubProxy)
+  //   ), // instance of called contract
+  //   method: 'balanceOf', // Method to be called
+  //   args: [account], // Method arguments - address to be checked for balance
+  // });
+
+  // console.log('lensExists', value);
   React.useEffect(() => {
-    async function createLensProfile() {
+    LensHubProxyContract.balanceOf(account).then((balance: any) => {
       console.log('account', account);
-      if (account) {
+      if (account && balance.eq(0)) {
         send([
           account,
           'user_' + Math.floor(100000 + Math.random() * 900000),
@@ -250,8 +272,7 @@ export default function HomePage() {
           'ipfs://QmfStdVKxxdAGobur1GARrDKRgv9cUowPXWFStWqiM2moM',
         ]);
       }
-    }
-    createLensProfile();
+    });
   }, [account]);
 
   return (
