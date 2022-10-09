@@ -81,7 +81,7 @@ export default function LandingPage() {
           <Text
             component="span"
             variant="gradient"
-            gradient={{ from: '#FFCD00', to: '#C8102E' }}
+            gradient={{ from: '#003087', to: '#003087' }}
             inherit
           >
             MUSIQU.ETH 🎧
@@ -97,7 +97,7 @@ export default function LandingPage() {
             size="xl"
             className={classes.control}
             variant="gradient"
-            gradient={{ from: '#FFCD00', to: '#C8102E' }}
+            gradient={{ from: '#003087', to: '#003087' }}
             onClick={() => {
               onConnect();
             }}

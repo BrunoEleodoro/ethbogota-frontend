@@ -11,9 +11,13 @@ import {
 } from '@mantine/core';
 import * as React from 'react';
 import { Contract, utils } from 'ethers';
-import { useContractFunction } from '@usedapp/core';
+import { useContractFunction, useEthers } from '@usedapp/core';
 import LensHubProxy from '../../assets/abis/LensHubProxy.json';
 import { LensHubProxyAddress } from '../../utiils/constants';
+import {
+  LensHubProxyContract,
+  ProfileFollowModuleContract,
+} from '../../utiils/contracts';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -63,7 +67,8 @@ export default function ArtistCard({
   profileId,
 }: BadgeCardProps) {
   const { classes, theme } = useStyles();
-
+  const { account } = useEthers();
+  const [isFollowing, setIsFollowing] = React.useState(false);
   const mockProfileInterface = new utils.Interface(LensHubProxy);
   const contract = new Contract(LensHubProxyAddress, mockProfileInterface);
   const { state, send } = useContractFunction(contract, 'follow', {
@@ -74,6 +79,17 @@ export default function ArtistCard({
   async function follow() {
     send([profileId], [10]);
   }
+
+  React.useEffect(() => {
+    if (account) {
+      ProfileFollowModuleContract.isFollowing(profileId, account, 10).then(
+        (isFollow: any) => {
+          console.log(isFollow.toString());
+          setIsFollowing(isFollow);
+        }
+      );
+    }
+  }, [account]);
 
   const features = badges.map((badge) => (
     <Badge
@@ -122,7 +138,11 @@ export default function ArtistCard({
           size={36}
           onClick={() => follow()}
         >
-          <IconHeart size={18} className={classes.like} stroke={1.5} />
+          <IconHeart
+            size={18}
+            className={classes.like}
+            stroke={isFollowing ? 5.0 : 1.5}
+          />
         </ActionIcon>
       </Group>
     </Card>
