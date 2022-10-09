@@ -18,7 +18,7 @@ export function useConnectWallet() {
       },
     },
   };
-  async function onConnect() {
+  async function onConnect(route = '/home') {
     try {
       const web3Modal = new Web3Modal({
         providerOptions, // required
@@ -27,7 +27,7 @@ export function useConnectWallet() {
 
       const provider = await web3Modal.connect();
       await activate(provider);
-      window.location.href = '/home';
+      window.location.href = route;
     } catch (error) {
       console.error(error);
     }

@@ -107,13 +107,14 @@ export default function LandingPage() {
 
           <Button
             component="a"
-            href="https://github.com/mantinedev/mantine"
             size="xl"
             variant="default"
             className={classes.control}
-            leftIcon={<GithubIcon size={20} />}
+            onClick={() => {
+              onConnect('/artist');
+            }}
           >
-            GitHub
+            I'm an Artist!
           </Button>
         </Group>
       </Container>
