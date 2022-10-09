@@ -104,7 +104,7 @@ export default function ArtistCard({
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
-        <Image src={image} alt={title} height={180} />
+        <Image src={image} alt={title} width={280} height={180} />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
@@ -121,7 +121,7 @@ export default function ArtistCard({
 
       <Card.Section className={classes.section}>
         <Text mt="md" className={classes.label} color="dimmed">
-          Perfect for you, if you enjoy
+          Connect with your favourite artist now.
         </Text>
         <Group spacing={7} mt={5}>
           {features}

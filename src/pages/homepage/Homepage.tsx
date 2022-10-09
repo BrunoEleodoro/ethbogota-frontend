@@ -43,6 +43,9 @@ import ArtistCard from './ArtistCard';
 import maluma from '../../assets/maluma.jpg';
 import shakira from '../../assets/shakira.jpg';
 import jbalvin from '../../assets/jbalvin.jpg';
+import dawer from '../../assets/dawer.jpg';
+import juanes from '../../assets/juanes.jpg';
+import catalina from '../../assets/catalina.jpg';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
@@ -202,15 +205,15 @@ const links = [
 ];
 
 const collections = [
-  { emoji: '👍', label: 'Sales' },
-  { emoji: '🚚', label: 'Deliveries' },
-  { emoji: '💸', label: 'Discounts' },
-  { emoji: '💰', label: 'Profits' },
-  { emoji: '✨', label: 'Reports' },
-  { emoji: '🛒', label: 'Orders' },
-  { emoji: '📅', label: 'Events' },
-  { emoji: '🙈', label: 'Debts' },
-  { emoji: '💁‍♀️', label: 'Customers' },
+  { emoji: '👍', label: 'About' },
+  { emoji: '🚚', label: 'NFTs' },
+  { emoji: '💸', label: 'Social Feed' },
+  { emoji: '💰', label: 'New Artists' },
+  { emoji: '✨', label: 'Playlists' },
+  { emoji: '🛒', label: 'Events' },
+  { emoji: '🙈', label: 'Submits' },
+  { emoji: '💁‍♀️', label: 'Competition' },
+  { emoji: '💁‍♀️', label: 'Contact' },
 ];
 
 export default function HomePage() {
@@ -345,6 +348,35 @@ export default function HomePage() {
           country=""
           image={jbalvin}
           title="J Balvin"
+          description=""
+        />
+      </Group>
+      <Group>
+        <ArtistCard
+          address="0x6d79250533C00FBdC8f92d6aB8c32987a4D6F315"
+          profileId={18954}
+          badges={[]}
+          country=""
+          image={dawer}
+          title="Dawer x Damper"
+          description=""
+        />
+        <ArtistCard
+          address="0xC3499348beB5679DDF8EC6dB182f7141E2B66D57"
+          profileId={18953}
+          badges={[]}
+          country=""
+          image={juanes}
+          title="Juanes"
+          description=""
+        />
+        <ArtistCard
+          address="0x9e9a2b7687B35bE7008A95b3b6173AA3fa9b4Ea9"
+          profileId={18953}
+          badges={[]}
+          country=""
+          image={catalina}
+          title="Catalina"
           description=""
         />
       </Group>
