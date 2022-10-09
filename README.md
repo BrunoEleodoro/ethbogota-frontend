@@ -1,5 +1,7 @@
 # musiqu.eth
 
+## Preview: https://6342ce84f42c311bd6b73278--cosmic-nasturtium-395853.netlify.app/
+
 ## Available Scripts
 
 In the project directory, you can run:
