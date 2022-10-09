@@ -14,6 +14,7 @@ You will also see any lint errors in the console.
 
 ### Tech stack
   
+  - React.js
   - useDapp
   - ethers
   - Mantine.dev UI
