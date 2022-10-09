@@ -47,6 +47,7 @@ const useStyles = createStyles((theme) => ({
 export default function LoginPage() {
   const { classes } = useStyles();
   const { onConnect } = useConnectWallet();
+
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
@@ -67,9 +68,9 @@ export default function LoginPage() {
             onConnect();
           }}
         >
-          Login
+          Join the community!
         </Button>
-        <Text align="center" mt="md">
+        {/* <Text align="center" mt="md">
           Don&apos;t have an account?{' '}
           <Anchor<'a'>
             href="#"
@@ -78,7 +79,7 @@ export default function LoginPage() {
           >
             Register
           </Anchor>
-        </Text>
+        </Text> */}
       </Paper>
     </div>
   );

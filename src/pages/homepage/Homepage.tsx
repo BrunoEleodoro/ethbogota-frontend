@@ -1,3 +1,5 @@
+import * as React from 'react';
+import { useEthers } from '@usedapp/core';
 import {
   createStyles,
   Navbar,
@@ -9,6 +11,7 @@ import {
   Group,
   ActionIcon,
   Tooltip,
+  Container,
 } from '@mantine/core';
 import {
   IconBulb,
@@ -19,6 +22,9 @@ import {
   IconSelector,
 } from '@tabler/icons';
 import NavbarComponent from './Navbar';
+import { create } from 'domain';
+
+const BREAKPOINT = '@media (max-width: 755px)';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -133,6 +139,40 @@ const useStyles = createStyles((theme) => ({
       color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     },
   },
+  inner: {
+    position: 'relative',
+    paddingTop: 200,
+    paddingBottom: 120,
+
+    [BREAKPOINT]: {
+      paddingBottom: 80,
+      paddingTop: 80,
+    },
+  },
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: 62,
+    fontWeight: 900,
+    lineHeight: 1.1,
+    margin: 0,
+    padding: 0,
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+
+    [BREAKPOINT]: {
+      fontSize: 42,
+      lineHeight: 1.2,
+    },
+  },
+
+  description: {
+    marginTop: theme.spacing.xl,
+    fontSize: 24,
+
+    [BREAKPOINT]: {
+      fontSize: 18,
+    },
+  },
 }));
 
 const links = [
@@ -155,6 +195,7 @@ const collections = [
 
 export default function HomePage() {
   const { classes } = useStyles();
+  const { account, chainId } = useEthers();
 
   const mainLinks = links.map((link) => (
     <UnstyledButton key={link.label} className={classes.mainLink}>
@@ -181,6 +222,13 @@ export default function HomePage() {
       {collection.label}
     </a>
   ));
+
+  React.useEffect(() => {
+    async function createLensProfile() {}
+    createLensProfile();
+  }, [account]);
+
+  console.log('account', account, chainId);
 
   return (
     <>
@@ -219,6 +267,26 @@ export default function HomePage() {
           <div className={classes.collections}>{collectionLinks}</div>
         </Navbar.Section>
       </Navbar>
+      <Container size={700} className={classes.inner}>
+        <h1 className={classes.title}>
+          A{' '}
+          <Text
+            component="span"
+            variant="gradient"
+            gradient={{ from: 'blue', to: 'cyan' }}
+            inherit
+          >
+            fully featured
+          </Text>{' '}
+          React components and hooks library
+        </h1>
+
+        <Text className={classes.description} color="dimmed">
+          Build fully functional accessible web applications with ease – Mantine
+          includes more than 100 customizable components and hooks to cover you
+          in any situation
+        </Text>
+      </Container>
     </>
   );
 }

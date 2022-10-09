@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Config, DAppProvider, Goerli, Mainnet } from '@usedapp/core';
+import {
+  Config,
+  DAppProvider,
+  Goerli,
+  Mainnet,
+  Mumbai,
+  Polygon,
+} from '@usedapp/core';
 import { getDefaultProvider } from 'ethers';
 import { MantineProvider } from '@mantine/core';
 

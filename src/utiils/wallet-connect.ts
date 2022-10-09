@@ -27,6 +27,7 @@ export function useConnectWallet() {
 
       const provider = await web3Modal.connect();
       await activate(provider);
+      window.location.href = '/home';
     } catch (error) {
       console.error(error);
     }
