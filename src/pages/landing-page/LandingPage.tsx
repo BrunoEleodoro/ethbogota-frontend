@@ -1,5 +1,6 @@
 import { createStyles, Container, Text, Button, Group } from '@mantine/core';
 import { GithubIcon } from '@mantine/ds';
+import { useConnectWallet } from '../../utiils/wallet-connect';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
@@ -71,6 +72,7 @@ const useStyles = createStyles((theme) => ({
 export default function LandingPage() {
   const { classes } = useStyles();
   // #FFCD00, #003087 and #C8102E
+  const { onConnect } = useConnectWallet();
   return (
     <div className={classes.wrapper}>
       <Container size={700} className={classes.inner}>
@@ -96,8 +98,11 @@ export default function LandingPage() {
             className={classes.control}
             variant="gradient"
             gradient={{ from: '#FFCD00', to: '#C8102E' }}
+            onClick={() => {
+              onConnect();
+            }}
           >
-            Get started
+            Join the community!
           </Button>
 
           <Button

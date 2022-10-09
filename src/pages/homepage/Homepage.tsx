@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEthers } from '@usedapp/core';
+import { useContractFunction, useEthers } from '@usedapp/core';
 import {
   createStyles,
   Navbar,
@@ -23,6 +23,10 @@ import {
 } from '@tabler/icons';
 import NavbarComponent from './Navbar';
 import { create } from 'domain';
+import { MockProfileCreationProxyContract } from '../../utiils/contracts';
+import { Contract, utils } from 'ethers';
+import MockProfileCreationProxy from '../../assets/abis/MockProfileCreationProxy.json';
+import { MockProfileCreationProxyAddress } from '../../utiils/constants';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
@@ -195,7 +199,7 @@ const collections = [
 
 export default function HomePage() {
   const { classes } = useStyles();
-  const { account, chainId } = useEthers();
+  const { account } = useEthers();
 
   const mainLinks = links.map((link) => (
     <UnstyledButton key={link.label} className={classes.mainLink}>
@@ -223,12 +227,32 @@ export default function HomePage() {
     </a>
   ));
 
+  const mockProfileInterface = new utils.Interface(MockProfileCreationProxy);
+  const contract = new Contract(
+    '0x420f0257D43145bb002E69B14FF2Eb9630Fc4736',
+    mockProfileInterface
+  );
+  const { state, send } = useContractFunction(contract, 'proxyCreateProfile', {
+    gasLimitBufferPercentage: 10,
+    transactionName: 'proxyCreateProfile',
+  });
+
   React.useEffect(() => {
-    async function createLensProfile() {}
+    async function createLensProfile() {
+      console.log('account', account);
+      if (account) {
+        send([
+          account,
+          'user_' + Math.floor(100000 + Math.random() * 900000),
+          '',
+          '0x0000000000000000000000000000000000000000',
+          0,
+          'ipfs://QmfStdVKxxdAGobur1GARrDKRgv9cUowPXWFStWqiM2moM',
+        ]);
+      }
+    }
     createLensProfile();
   }, [account]);
-
-  console.log('account', account, chainId);
 
   return (
     <>
@@ -267,26 +291,6 @@ export default function HomePage() {
           <div className={classes.collections}>{collectionLinks}</div>
         </Navbar.Section>
       </Navbar>
-      <Container size={700} className={classes.inner}>
-        <h1 className={classes.title}>
-          A{' '}
-          <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan' }}
-            inherit
-          >
-            fully featured
-          </Text>{' '}
-          React components and hooks library
-        </h1>
-
-        <Text className={classes.description} color="dimmed">
-          Build fully functional accessible web applications with ease – Mantine
-          includes more than 100 customizable components and hooks to cover you
-          in any situation
-        </Text>
-      </Container>
     </>
   );
 }
