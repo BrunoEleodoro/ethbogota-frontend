@@ -18,6 +18,7 @@ import {
   ActionIcon,
   Tooltip,
   Container,
+  AppShell,
 } from '@mantine/core';
 import {
   IconBulb,
@@ -38,6 +39,10 @@ import LensHubProxy from '../../assets/abis/LensHubProxy.json';
 import MockProfileCreationProxy from '../../assets/abis/MockProfileCreationProxy.json';
 import { MockProfileCreationProxyAddress } from '../../utiils/constants';
 import { Interface } from 'ethers/lib/utils';
+import ArtistCard from './ArtistCard';
+import maluma from '../../assets/maluma.jpg';
+import shakira from '../../assets/shakira.jpg';
+import jbalvin from '../../assets/jbalvin.jpg';
 
 const BREAKPOINT = '@media (max-width: 755px)';
 
@@ -249,16 +254,6 @@ export default function HomePage() {
     transactionName: 'proxyCreateProfile',
   });
 
-  // const value = useCall({
-  //   contract: new Contract(
-  //     '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82',
-  //     new Interface(LensHubProxy)
-  //   ), // instance of called contract
-  //   method: 'balanceOf', // Method to be called
-  //   args: [account], // Method arguments - address to be checked for balance
-  // });
-
-  // console.log('lensExists', value);
   React.useEffect(() => {
     LensHubProxyContract.balanceOf(account).then((balance: any) => {
       console.log('account', account);
@@ -276,42 +271,83 @@ export default function HomePage() {
   }, [account]);
 
   return (
-    <>
-      <NavbarComponent links={[]} />
-      <Navbar
-        height={700}
-        width={{ sm: 300 }}
-        p="md"
-        className={classes.navbar}
-      >
-        <TextInput
-          placeholder="Search"
-          size="xs"
-          icon={<IconSearch size={12} stroke={1.5} />}
-          rightSectionWidth={70}
-          rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
-          styles={{ rightSection: { pointerEvents: 'none' } }}
-          mb="sm"
+    <AppShell
+      padding="md"
+      header={<NavbarComponent links={[]} />}
+      navbar={
+        <Navbar
+          height={700}
+          width={{ sm: 300 }}
+          p="md"
+          className={classes.navbar}
+        >
+          <TextInput
+            placeholder="Search"
+            size="xs"
+            icon={<IconSearch size={12} stroke={1.5} />}
+            rightSectionWidth={70}
+            rightSection={<Code className={classes.searchCode}>Ctrl + K</Code>}
+            styles={{ rightSection: { pointerEvents: 'none' } }}
+            mb="sm"
+          />
+
+          <Navbar.Section className={classes.section}>
+            <div className={classes.mainLinks}>{mainLinks}</div>
+          </Navbar.Section>
+
+          <Navbar.Section className={classes.section}>
+            <Group className={classes.collectionsHeader} position="apart">
+              <Text size="xs" weight={500} color="dimmed">
+                Collections
+              </Text>
+              <Tooltip label="Create collection" withArrow position="right">
+                <ActionIcon variant="default" size={18}>
+                  <IconPlus size={12} stroke={1.5} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
+            <div className={classes.collections}>{collectionLinks}</div>
+          </Navbar.Section>
+        </Navbar>
+      }
+      styles={(theme) => ({
+        main: {
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
+        },
+      })}
+    >
+      <Group>
+        <ArtistCard
+          address="0x6d79250533C00FBdC8f92d6aB8c32987a4D6F315"
+          profileId={18954}
+          badges={[]}
+          country=""
+          image={maluma}
+          title="Maluma"
+          description=""
         />
-
-        <Navbar.Section className={classes.section}>
-          <div className={classes.mainLinks}>{mainLinks}</div>
-        </Navbar.Section>
-
-        <Navbar.Section className={classes.section}>
-          <Group className={classes.collectionsHeader} position="apart">
-            <Text size="xs" weight={500} color="dimmed">
-              Collections
-            </Text>
-            <Tooltip label="Create collection" withArrow position="right">
-              <ActionIcon variant="default" size={18}>
-                <IconPlus size={12} stroke={1.5} />
-              </ActionIcon>
-            </Tooltip>
-          </Group>
-          <div className={classes.collections}>{collectionLinks}</div>
-        </Navbar.Section>
-      </Navbar>
-    </>
+        <ArtistCard
+          address="0xC3499348beB5679DDF8EC6dB182f7141E2B66D57"
+          profileId={18953}
+          badges={[]}
+          country=""
+          image={shakira}
+          title="Shakira"
+          description=""
+        />
+        <ArtistCard
+          address="0x9e9a2b7687B35bE7008A95b3b6173AA3fa9b4Ea9"
+          profileId={18953}
+          badges={[]}
+          country=""
+          image={jbalvin}
+          title="J Balvin"
+          description=""
+        />
+      </Group>
+    </AppShell>
   );
 }
